@@ -12,7 +12,7 @@
 
 ---
 
-## ?? Executive Summary
+## 📌 Executive Summary
 
 **BankingLLM-Optimizer** is an end-to-end, production-ready Machine Learning system that solves fine-grained customer intent classification across **77 banking intents** on the canonical **BANKING77** benchmark. 
 
@@ -26,7 +26,7 @@ Rather than relying on naive chatbot completions, this architecture approaches i
 
 ---
 
-## ?? Central Research Questions & Engineering Goals
+## 🎯 Central Research Questions & Engineering Goals
 
 > **Core Research Question**: *Can dynamic semantic retrieval and prompt optimization allow lightweight LLMs to accurately discriminate between 77 highly overlapping banking intents without costly fine-tuning, while remaining robust to customer negation and out-of-domain ambiguity?*
 
@@ -39,7 +39,7 @@ Rather than relying on naive chatbot completions, this architecture approaches i
 
 ---
 
-## ??? System Architecture
+## 🏛️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -79,7 +79,7 @@ flowchart TD
 
 ---
 
-## ?? Empirical Benchmark Results
+## 📊 Empirical Benchmark Results
 
 Evaluated on the **BANKING77** validation partition under controlled experimental conditions:
 
@@ -99,7 +99,7 @@ Evaluated on the **BANKING77** validation partition under controlled experimenta
 
 ---
 
-## ??? Production Guardrails & Edge-Case Handling
+## 🛡️ Production Guardrails & Edge-Case Handling
 
 Real-world customer conversations rarely fit clean textbook datasets. The system features dedicated guardrails for known NLP challenges:
 
@@ -121,13 +121,13 @@ Real-world customer conversations rarely fit clean textbook datasets. The system
 * **Customer Inquiry**: *"how can i create a new account"*
 * **Challenge**: BANKING77 only covers existing account management; opening a new account is not in the 77 intents.
 * **Resolution**: Rather than hallucinating a false category, the Pydantic parser falls back to `unknown` with low confidence.
-* **Routing**: System flags query as **?? Requires Human Review**.
+* **Routing**: System flags query as **⚠️ Requires Human Review**.
 * **Automated Reply**: Generates helpful onboarding advice while notifying the user of human specialist escalation:
   > *"Thank you for your interest in opening a new account with us; you can easily begin the registration process in our mobile app by providing a valid government-issued ID. Please rest assured that our specialist banking team has received your request and will be in touch shortly to assist you with any further steps."*
 
 ---
 
-## ?? Streamlit Web Application
+## 💻 Streamlit Web Application
 
 The interactive web application (`app/streamlit_app.py`) provides three purpose-built operational interfaces:
 
@@ -147,81 +147,81 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## ?? Repository Layout
+## 📂 Repository Layout
 
 ```
 banking-llm-optimizer/
-??? README.md                      # Production engineering presentation & methodology
-??? LICENSE                        # MIT License
-??? requirements.txt               # Locked dependencies
-??? pytest.ini                     # Pytest configuration
-??? .env.example                   # Environment configuration template
-?
-??? notebooks/                     # Step-by-step experimental research notebooks
-?   ??? 01_data_exploration.ipynb        # EDA, stratified splitting & zero-leakage audit
-?   ??? 02_zero_one_few_shot.ipynb       # Baseline static prompting experiments
-?   ??? 03_dynamic_few_shot.ipynb        # FAISS semantic retrieval & K-shot ablation
-?   ??? 04_prompt_optimization.ipynb     # Component-wise prompt ablations (A through F)
-?   ??? 05_final_evaluation.ipynb        # Full test set evaluation & failure taxonomy
-?   ??? 06_cross_model_analysis.ipynb    # Multi-model parameter scaling & cost profiling
-?
-??? src/                           # Production source code
-?   ??? config.py                  # YAML loader, environment variables & pricing tables
-?   ??? pipeline.py                # Master classification pipeline & confidence routing
-?   ?
-?   ??? data/                      # Data pipeline & ingestion
-?   ?   ??? loader.py              # Download, stratified split, leakage verification
-?   ?   ??? preprocessing.py       # Text normalization & statistical EDA
-?   ?
-?   ??? retrieval/                 # Vector retrieval subsystem
-?   ?   ??? embeddings.py          # Sentence-Transformers all-MiniLM-L6-v2 generator
-?   ?   ??? faiss_index.py         # FAISS IndexFlatIP cosine index manager
-?   ?   ??? example_selector.py    # Similarity & diversity-aware exemplar selection
-?   ?   ??? build_index.py         # Index generation script for training pool
-?   ?
-?   ??? prompts/                   # Prompt engineering engine
-?   ?   ??? templates.py           # Templates for all prompting strategies & ablations
-?   ?   ??? optimizer.py           # Prompt rule optimization & artifact exporter
-?   ?
-?   ??? llm/                       # Inference & validation layer
-?   ?   ??? groq_client.py         # Ultra-fast Groq client with backoff & 429 auto-fallback
-?   ?   ??? response_parser.py     # Pydantic v2 structured parser & canonical normalizer
-?   ?   ??? response_generator.py  # Intent-grounded customer reply & escalation engine
-?   ?
-?   ??? evaluation/                # Evaluation & error analysis framework
-?   ?   ??? metrics.py             # Accuracy, Macro-F1, Weighted-F1, Per-class breakdown
-?   ?   ??? confusion.py           # 77x77 confusion matrix generation & error pair ranking
-?   ?   ??? error_analysis.py      # 6-category failure taxonomy classifier
-?   ?   ??? cost_analysis.py       # Latency, token overhead, and monetary cost models
-?   ?
-?   ??? utils/                     # Production utilities
-?       ??? caching.py             # Persistent SQLite query-response cache (zero empty caching)
-?       ??? logging.py             # Structured telemetry & audit logger
-?
-??? app/                           # Streamlit Web Application
-?   ??? streamlit_app.py           # Multi-tab interactive application
-?   ??? components.py              # Dark/light-mode UI components & metric cards
-?
-??? configs/                       # Configuration files
-?   ??? experiments.yaml           # Experiment hyper-parameters & pricing tiers
-?   ??? intents.json               # 77 canonical BANKING77 intent identifiers
-?
-??? tests/                         # Comprehensive unit test suite (100% offline)
-?   ??? test_prompts.py            # Prompt structure & ablation tests
-?   ??? test_retrieval.py          # FAISS indexing & retrieval tests
-?   ??? test_parser.py             # Pydantic parsing & schema error resilience tests
-?   ??? test_metrics.py            # Accuracy & F1 metric computation tests
-?   ??? test_response_generator.py # Automated reply & escalation verification tests
-?
-??? docs/                          # Comprehensive technical documentation
-    ??? architecture.md            # In-depth system architecture & data flow
-    ??? methodology.md             # Experimental methodology & evaluation design
-    ??? experiments.md             # Empirical logs, ablation tables & Pareto frontiers
+├── README.md                      # Production engineering presentation & methodology
+├── LICENSE                        # MIT License
+├── requirements.txt               # Locked dependencies
+├── pytest.ini                     # Pytest configuration
+├── .env.example                   # Environment configuration template
+│
+├── notebooks/                     # Step-by-step experimental research notebooks
+│   ├── 01_data_exploration.ipynb        # EDA, stratified splitting & zero-leakage audit
+│   ├── 02_zero_one_few_shot.ipynb       # Baseline static prompting experiments
+│   ├── 03_dynamic_few_shot.ipynb        # FAISS semantic retrieval & K-shot ablation
+│   ├── 04_prompt_optimization.ipynb     # Component-wise prompt ablations (A through F)
+│   ├── 05_final_evaluation.ipynb        # Full test set evaluation & failure taxonomy
+│   └── 06_cross_model_analysis.ipynb    # Multi-model parameter scaling & cost profiling
+│
+├── src/                           # Production source code
+│   ├── config.py                  # YAML loader, environment variables & pricing tables
+│   ├── pipeline.py                # Master classification pipeline & confidence routing
+│   │
+│   ├── data/                      # Data pipeline & ingestion
+│   │   ├── loader.py              # Download, stratified split, leakage verification
+│   │   └── preprocessing.py       # Text normalization & statistical EDA
+│   │
+│   ├── retrieval/                 # Vector retrieval subsystem
+│   │   ├── embeddings.py          # Sentence-Transformers all-MiniLM-L6-v2 generator
+│   │   ├── faiss_index.py         # FAISS IndexFlatIP cosine index manager
+│   │   ├── example_selector.py    # Similarity & diversity-aware exemplar selection
+│   │   └── build_index.py         # Index generation script for training pool
+│   │
+│   ├── prompts/                   # Prompt engineering engine
+│   │   ├── templates.py           # Templates for all prompting strategies & ablations
+│   │   └── optimizer.py           # Prompt rule optimization & artifact exporter
+│   │
+│   ├── llm/                       # Inference & validation layer
+│   │   ├── groq_client.py         # Ultra-fast Groq client with backoff & 429 auto-fallback
+│   │   ├── response_parser.py     # Pydantic v2 structured parser & canonical normalizer
+│   │   └── response_generator.py  # Intent-grounded customer reply & escalation engine
+│   │
+│   ├── evaluation/                # Evaluation & error analysis framework
+│   │   ├── metrics.py             # Accuracy, Macro-F1, Weighted-F1, Per-class breakdown
+│   │   ├── confusion.py           # 77x77 confusion matrix generation & error pair ranking
+│   │   ├── error_analysis.py      # 6-category failure taxonomy classifier
+│   │   └── cost_analysis.py       # Latency, token overhead, and monetary cost models
+│   │
+│   └── utils/                     # Production utilities
+│       ├── caching.py             # Persistent SQLite query-response cache (zero empty caching)
+│       └── logging.py             # Structured telemetry & audit logger
+│
+├── app/                           # Streamlit Web Application
+│   ├── streamlit_app.py           # Multi-tab interactive application
+│   └── components.py              # Dark/light-mode UI components & metric cards
+│
+├── configs/                       # Configuration files
+│   ├── experiments.yaml           # Experiment hyper-parameters & pricing tiers
+│   └── intents.json               # 77 canonical BANKING77 intent identifiers
+│
+├── tests/                         # Comprehensive unit test suite (100% offline)
+│   ├── test_prompts.py            # Prompt structure & ablation tests
+│   ├── test_retrieval.py          # FAISS indexing & retrieval tests
+│   ├── test_parser.py             # Pydantic parsing & schema error resilience tests
+│   ├── test_metrics.py            # Accuracy & F1 metric computation tests
+│   └── test_response_generator.py # Automated reply & escalation verification tests
+│
+└── docs/                          # Comprehensive technical documentation
+    ├── architecture.md            # In-depth system architecture & data flow
+    ├── methodology.md             # Experimental methodology & evaluation design
+    └── experiments.md             # Empirical logs, ablation tables & Pareto frontiers
 ```
 
 ---
 
-## ?? Quickstart & Installation
+## 🚀 Quickstart & Installation
 
 ### 1. Clone the Repository & Set Up Virtual Environment
 
@@ -273,7 +273,7 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## ?? Reproducing Experiments & Notebooks
+## 🧪 Reproducing Experiments & Notebooks
 
 All experimental workflows are fully documented and executable via Jupyter notebooks:
 
@@ -286,7 +286,7 @@ All experimental workflows are fully documented and executable via Jupyter noteb
 
 ---
 
-## ?? Ethical Considerations & Banking Compliance
+## ⚖️ Ethical Considerations & Banking Compliance
 
 - **Zero PII Exposure**: The system processes anonymized customer inquiries. Prompts and responses explicitly reject requests for sensitive credentials (PINs, CVVs, full passwords).
 - **Abstention Over Hallucination**: Financial institutions face regulatory penalties for providing incorrect automated advice. When confidence falls below 80% or requests are out-of-scope, the system prioritizes safe human escalation over taking a speculative guess.
@@ -294,6 +294,6 @@ All experimental workflows are fully documented and executable via Jupyter noteb
 
 ---
 
-## ?? License
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
