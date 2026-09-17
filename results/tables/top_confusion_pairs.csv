@@ -1,0 +1,6 @@
+true_intent,predicted_intent,count
+Refund_not_showing_up,refund_not_showing_up,2
+why_verify_identity,unknown,1
+compromised_card,unknown,1
+automatic_top_up,unknown,1
+order_physical_card,unknown,1

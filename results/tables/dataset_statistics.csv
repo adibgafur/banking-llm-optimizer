@@ -1,0 +1,5 @@
+Split,Samples,Intents,Avg Word Count
+Train Pool (Dev),9002,77,12.0
+Validation,1001,77,11.5
+Official Test,3080,77,10.95
+Total,13083,77,11.71
